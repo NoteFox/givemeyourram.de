@@ -2,11 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>givemeyourram.de</title>
+
+    <link rel="stylesheet" href="/input.css"/>
+    <link rel="stylesheet" href="/utils.css"/>
+    <link rel="stylesheet" href="/animatedClock/css/animatedClock.css">
+
 </head>
-<body>
-<h1>
-    Yep, this is still in progress
-</h1>
+<body class="flex-center">
+<main class="container flex-center h-screen">
+    <div class="absolute">
+        <hr>
+        00:00:00
+        <hr>
+    </div>
+    <div id="animatedClockContainer"></div>
+</main>
 </body>
+<script src="/utils.js"></script>
+<script src="/animatedClock/js/animatedClock.js"></script>
 </html>
