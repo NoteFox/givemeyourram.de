@@ -1,0 +1,50 @@
+:root {
+	--background: #fffaeb;
+	--text: #130e01;
+	--primary: #ff8400;
+	--secondary: #fff5d6;
+	--accent: #cf4307;
+
+	--dark-text: #fef9ec;
+	--dark-background: #140f00;
+	--dark-primary: #ff8400;
+	--dark-secondary: #291f00;
+	--dark-accent: #f86c30;
+
+	--sm: 576px;
+	--md: 576px;
+	--lg: 576px;
+	--xl: 576px;
+	--xxl: 576px;
+
+	--container-min: 150px;
+	--container-max: 950px;
+}
+
+body {
+	background: var(--background);
+
+	color: var(--text);
+
+	overflow: hidden;
+}
+
+@media screen and (min-width:var(--sm)) {
+
+}
+
+@media screen and (min-width:var(--md)) {
+
+}
+
+@media screen and (min-width:var(--lg)) {
+
+}
+
+@media screen and (min-width:var(--xl)) {
+
+}
+
+@media screen and (min-width:var(--xxl)) {
+
+}

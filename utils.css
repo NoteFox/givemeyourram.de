@@ -1,0 +1,22 @@
+.flex-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.container {
+	width: clamp(var(--container-min), 100%, var(--container-max));
+}
+
+.h-screen {
+	height: 100svh;
+}
+
+.w-screen {
+	width: 100svw;
+}
+
+.absolute {
+	width: 100%;
+	position: absolute;
+}
