@@ -73,7 +73,7 @@ class ClockEntry {
 		return this.getNumbers()
 			.toConnectedArray()
 			.filter( (element) => element.innerText === String(number) )
-			.first()
+			.first() ?? this.getNumbers().toConnectedArray().first()
 	}
 }
 
@@ -99,6 +99,10 @@ class AnimatedClock {
 
 	setSectionTo(section, numberPosition) {
 		const numberToCenter = section.getNumber(numberPosition)
+
+		if(!numberToCenter) {
+			return
+		}
 
 		const currentY = this.getElementY(numberToCenter)
 		const neededY = this.getContainerYCenter() - (this.getElementHeight(numberToCenter) / 2)
