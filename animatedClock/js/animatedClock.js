@@ -1,145 +1,148 @@
 const animatedClock = () => {
-	const possibleNumberArray = {
-		'hh': 3,
-		'h': 2,
-		'mm': 9,
-		'm': 5,
-		'ss': 9,
-		's': 5,
-	}
+  const possibleNumberArray = {
+    'hh': 3,
+    'h': 2,
+    'mm': 9,
+    'm': 5,
+    'ss': 9,
+    's': 5,
+  }
 
-	const clockElement = document.getElementById('animatedClockContainer')
+  const clockElement = document.getElementById('animatedClockContainer')
 
-	const clockSections = createNumberContainers()
-	clockSections.forEach( (section) => clockElement.appendChild(section.containerElement))
+  const clockSections = createNumberContainers()
+  clockSections.forEach((section) => clockElement.appendChild(section.containerElement))
 
-	const max = clockSections
-		.map((element) => element.containerElement.clientHeight)
-		.sort((a, b) => {return a > b ? 1 : -1})
-		.first()
+  const max = clockSections
+      .map((element) => element.containerElement.clientHeight)
+      .sort((a, b) => {
+        return a > b ? 1 : -1
+      })
+      .first()
 
-	for (const child of clockElement.children) {
-		child.style.height = max + "px"
-		console.log(max + "px")
-	}
+  for (const child of clockElement.children) {
+    child.style.height = max + "px"
+    console.log(max + "px")
+  }
 
-	const clock = new AnimatedClock()
-	clock.container = clockElement
-	clockSections.forEach( (section) => clock.addNewSection(section))
+  const clock = new AnimatedClock()
+  clock.container = clockElement
+  clockSections.forEach((section) => clock.addNewSection(section))
 
-	clock.start()
+  clock.start()
 
-	function createNumberContainers() {
-		return Object.entries(possibleNumberArray).map(entry => {
-			const rowElement = document.createElement('div')
-			rowElement.id = entry[0]
-			rowElement.classList.add('numberRow')
+  function createNumberContainers() {
+    return Object.entries(possibleNumberArray).map(entry => {
+      const rowElement = document.createElement('div')
+      rowElement.id = entry[0]
+      rowElement.classList.add('numberRow')
 
-			createNumbers(entry[1], rowElement)
+      createNumbers(entry[1], rowElement)
 
-			return new ClockEntry(entry[0], rowElement, entry[1])
-		})
-	}
+      return new ClockEntry(entry[0], rowElement, entry[1])
+    })
+  }
 
-	function createNumbers(max, outer) {
-		createNumberArray(max).map((n) => {
-			const number = document.createElement('h1')
-			number.innerText = String(n)
-			number.classList.add('number')
-			return number
-		}).forEach((element) => {
-			outer.appendChild(element)
-		})
-	}
+  function createNumbers(max, outer) {
+    createNumberArray(max).map((n) => {
+      const number = document.createElement('h1')
+      number.innerText = String(n)
+      number.classList.add('number')
+      return number
+    }).forEach((element) => {
+      outer.appendChild(element)
+    })
+  }
 }
 
 class ClockEntry {
-	id = 0
-	/** @type HTMLElement */
-	containerElement = null
-	max = 0
+  id = 0
+  /** @type HTMLElement */
+  containerElement = null
+  max = 0
 
-	constructor(id, element, max) {
-		this.id = id
-		this.containerElement = element
-		this.max = max
-	}
+  constructor(id, element, max) {
+    this.id = id
+    this.containerElement = element
+    this.max = max
+  }
 
-	getNumbers() {
-		return this.containerElement.children
-	}
+  getNumbers() {
+    return this.containerElement.children
+  }
 
-	getNumber(number) {
-		return this.getNumbers()
-			.toConnectedArray()
-			.filter( (element) => element.innerText === String(number) )
-			.first() ?? this.getNumbers().toConnectedArray().first()
-	}
+  getNumber(number) {
+    return this.getNumbers()
+        .toConnectedArray()
+        .filter((element) => element.innerText === String(number))
+        .first() ?? this.getNumbers().toConnectedArray().first()
+  }
 }
 
 class AnimatedClock {
-	/** @type ClockEntry[] */
-	sections = []
-	/** @type HTMLElement */
-	container = null
-	addNewSection(section) {
-		this.sections.push(section)
-	}
+  /** @type ClockEntry[] */
+  sections = []
+  /** @type HTMLElement */
+  container = null
 
-	start() {
-		this.resetClock()
-		this.startClock()
-	}
+  addNewSection(section) {
+    this.sections.push(section)
+  }
 
-	resetClock() {
-		this.sections.forEach( (section) => {
-			this.setSectionTo(section, 0)
-		})
-	}
+  start() {
+    this.resetClock()
+    this.startClock()
+  }
 
-	setSectionTo(section, numberPosition) {
-		const numberToCenter = section.getNumber(numberPosition)
+  resetClock() {
+    this.sections.forEach((section) => {
+      this.setSectionTo(section, 0)
+    })
+  }
 
-		if(!numberToCenter) {
-			return
-		}
+  setSectionTo(section, numberPosition) {
+    const numberToCenter = section.getNumber(numberPosition)
 
-		const currentY = this.getElementY(numberToCenter)
-		const neededY = this.getContainerYCenter() - (this.getElementHeight(numberToCenter) / 2)
+    if (!numberToCenter) {
+      return
+    }
 
-		const changeOfMargin = neededY - currentY
+    const currentY = this.getElementY(numberToCenter)
+    const neededY = this.getContainerYCenter() - (this.getElementHeight(numberToCenter) / 2)
 
-		this.changeMarginOfSection(section, changeOfMargin)
-	}
+    const changeOfMargin = neededY - currentY
 
-	/**
-	 * @param section {ClockEntry}
-	 * @param marginChange {Number}
-	 */
-	changeMarginOfSection(section, marginChange) {
-		const currentMargin = Number(section.containerElement.style.marginTop.replace('px', '') ?? 0)
-		const newMargin = currentMargin + marginChange
-		section.containerElement.style.marginTop = newMargin + "px"
-	}
+    this.changeMarginOfSection(section, changeOfMargin)
+  }
 
-	getElementY(element) {
-		return element.getBoundingClientRect().y
-	}
+  /**
+   * @param section {ClockEntry}
+   * @param marginChange {Number}
+   */
+  changeMarginOfSection(section, marginChange) {
+    const currentMargin = Number(section.containerElement.style.marginTop.replace('px', '') ?? 0)
+    const newMargin = currentMargin + marginChange
+    section.containerElement.style.marginTop = newMargin + "px"
+  }
 
-	getElementHeight(element) {
-		return element.clientHeight
-	}
+  getElementY(element) {
+    return element.getBoundingClientRect().y
+  }
 
-	getContainerYCenter() {
-		return (this.container.getBoundingClientRect().y
-			+ this.container.getBoundingClientRect().bottom) / 2
-	}
+  getElementHeight(element) {
+    return element.clientHeight
+  }
 
-	mow
+  getContainerYCenter() {
+    return (this.container.getBoundingClientRect().y
+        + this.container.getBoundingClientRect().bottom) / 2
+  }
 
-	startClock() {
+  //mow
 
-	}
+  startClock() {
+
+  }
 }
 
 addEventListener('DOMContentLoaded', animatedClock)
