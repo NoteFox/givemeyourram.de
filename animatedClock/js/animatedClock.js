@@ -180,8 +180,8 @@ class AnimatedClock {
   }
 
   start() {
-    this.resetClock()
-    // this.setupClock()
+    // this.resetClock()
+    this.setupClock()
 
     this.setupTransitionEffect()
 
@@ -231,16 +231,14 @@ class AnimatedClock {
     const currentMinute = foundTime[2].split("")
     const currentSeconds = foundTime[3].split("")
 
-    this.sections[0].jumpTo(currentHour[0])
-    this.sections[1].jumpTo(currentHour[1])
+    this.sections[0].jumpTo(Number(currentHour[0]))
+    this.sections[1].jumpTo(Number(currentHour[1]))
     this.sections[2].jumpTo(0)
-    this.sections[3].jumpTo(currentMinute[0])
-    this.sections[4].jumpTo(currentMinute[1])
+    this.sections[3].jumpTo(Number(currentMinute[0]))
+    this.sections[4].jumpTo(Number(currentMinute[1]))
     this.sections[5].jumpTo(0)
-    this.sections[6].jumpTo(currentSeconds[0])
-    this.sections[7].jumpTo(currentSeconds[1])
-
-    console.log(foundTime)
+    this.sections[6].jumpTo(Number(currentSeconds[0]))
+    this.sections[7].jumpTo(Number(currentSeconds[1]))
   }
 }
 
