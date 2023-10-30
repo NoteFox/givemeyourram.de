@@ -21,3 +21,11 @@ Array.prototype.first = function () {
 Element.prototype.appendBefore = function (element) {
 	element.parentNode.insertBefore(this, element);
 };
+
+function getElementY(element) {
+	return element.getBoundingClientRect().y
+}
+
+function getElementHeight(element) {
+	return element.clientHeight
+}

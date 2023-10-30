@@ -6,8 +6,3 @@
 
 	gap: .5rem;
 }
-
-.numberRow {
-	transition: margin-top 1s ease-in-out;
-}
-
